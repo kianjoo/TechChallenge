@@ -3,6 +3,7 @@ using FlightPlanWeb.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -18,26 +19,31 @@ namespace FlightPlanWeb.Services
     public class FlightPlanService : IFlightPlanService
     {
         public IHttpClientFactory httpClient { get; set; }
-        public readonly ILogger<FlightPlanService> logger;
-        static List<FlightPlanDTO> _flightPlanDTOList = new List<FlightPlanDTO>();
+		public readonly ILogger<FlightPlanService> logger;
+		public readonly IConfiguration configuration;
+		static List<FlightPlanDTO> _flightPlanDTOList = new List<FlightPlanDTO>();
 
-        public FlightPlanService(IHttpClientFactory httpClient, ILogger<FlightPlanService> logger)
+        public FlightPlanService(IHttpClientFactory httpClient, ILogger<FlightPlanService> logger, IConfiguration configuration)
         {
             this.httpClient = httpClient;
             this.logger = logger;
+            this.configuration = configuration;
         }
 
         public async Task<T>? GetAllAsync<T>()
         {
-            HttpRequestMessage message = new HttpRequestMessage()
+            string serviceURL=configuration.GetValue<string>("ServiceUrls:FlightPlanAPI");
+			string apiKey = configuration.GetValue<string>("apiKey");
+
+			HttpRequestMessage message = new HttpRequestMessage()
             {
                 Headers =
                     {
                         { "Accept", "application/json" },
-                        { "apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" },
+                        { "apikey", apiKey },
                     },
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("http://localhost:5000/api/FlightPlan/displayall"),
+                RequestUri = new Uri(serviceURL+"/api/FlightPlan/displayall"),
                 //Content = new StringContent(JsonConvert.SerializeObject('apiContent'), Encoding.UTF8, "application/json")
 
             };
@@ -52,15 +58,18 @@ namespace FlightPlanWeb.Services
 
         public async Task<T>? GetAsync<T>()
         {
-            HttpRequestMessage message = new HttpRequestMessage()
+			string serviceURL = configuration.GetValue<string>("ServiceUrls:FlightPlanAPI");
+			string apiKey = configuration.GetValue<string>("apiKey");
+
+			HttpRequestMessage message = new HttpRequestMessage()
             {
                 Headers =
                     {
                         { "Accept", "application/json" },
-                        { "apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" },
+                        { "apikey", apiKey },
                     },
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("http://localhost:5000/api/FlightPlan/displayFlightPlan"),
+                RequestUri = new Uri(serviceURL+"/api/FlightPlan/displayFlightPlan"),
                 //Content = new StringContent(JsonConvert.SerializeObject('apiContent'), Encoding.UTF8, "application/json")
 
             };
@@ -76,15 +85,17 @@ namespace FlightPlanWeb.Services
 
         public async Task<T>? GenerateFlightPlanAsync<T>()
         {
-            HttpRequestMessage message = new HttpRequestMessage()
+			string serviceURL = configuration.GetValue<string>("ServiceUrls:FlightPlanAPI");
+			string apiKey = configuration.GetValue<string>("apiKey");
+			HttpRequestMessage message = new HttpRequestMessage()
             {
                 Headers =
                     {
                         { "Accept", "application/json" },
-                        { "apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" },
+                        { "apikey", apiKey },
                     },
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("http://localhost:5000/api/FlightPlan/retrieveFlightPlan"),
+                RequestUri = new Uri(serviceURL+"/api/FlightPlan/retrieveFlightPlan"),
                 //Content = new StringContent(JsonConvert.SerializeObject('apiContent'), Encoding.UTF8, "application/json")
 
             };
