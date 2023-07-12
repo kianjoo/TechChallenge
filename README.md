@@ -1,8 +1,12 @@
 # The Flight Plan project
-Problem statement: Flights file a flight plan that specify a route that the pilot wishes to take between its departure and destination airports. The route is made up of waypoints and airways. We want to create a software that interrogates a few APIs, select a flight and display the associated flight route on a global map.
+Problem statement: 
+Flights file a flight plan that specify a route that the pilot wishes to take between its departure and destination airports. The route is made up of waypoints and airways. We want to create a software that interrogates a few APIs, select a flight and display the associated flight route on a global map.
 
 An additional task would be to find and propose alternate flight routes when a button is pressed and to display it accordingly. This additional task is an optional task and candidates need not complete this task. 
 
+
+# Cloning the project
+git clone 
 
 # .Net Packages
 Serilog packages used for logging
@@ -22,7 +26,7 @@ Json processing packages for Json messages
 
 
 # Containerizing release with Docker   
-For this release, you must have Docker installed and running for this sample to work. Additionally, only Linux-x64 containers are supported.
+For this release, Docker must be installed and running for this sample to work. Additionally, only Linux-x64 containers are supported.
  
 #add a reference to a (temporary) package that creates the container
 1. dotnet add package Microsoft.NET.Build.Containers
