@@ -39,4 +39,6 @@ For this release, Docker must be installed and running for this sample to work. 
 
 1. dotnet add package Microsoft.NET.Build.Containers
 2. dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer
-3. docker run -it --rm -p 4000:80 flightplanweb:1.0.0
+   ![image](https://github.com/kianjoo/TechChallenge/assets/101357464/03e41e64-7ba1-42ed-9728-4a297363aa36)
+  Take note of the container name
+3. docker run -it --rm -p 6000:80 flightplanweb:1.0.0
