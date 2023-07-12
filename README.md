@@ -37,11 +37,6 @@ Leaflet map with OpenStreetMap tiles is used for the flight plan routing, workin
 # Containerizing release with Docker   
 For this release, Docker must be installed and running for this sample to work. Additionally, only Linux-x64 containers are supported.
 
-#add a reference to a (temporary) package that creates the container
 1. dotnet add package Microsoft.NET.Build.Containers
-
-#publish your project for linux-x64
 2. dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer
-
-#run your app using the new container
 3. docker run -it --rm -p 4000:80 flightplanweb:1.0.0
