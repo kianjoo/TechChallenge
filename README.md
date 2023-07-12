@@ -4,9 +4,16 @@ Flights file a flight plan that specify a route that the pilot wishes to take be
 
 An additional task would be to find and propose alternate flight routes when a button is pressed and to display it accordingly. This additional task is an optional task and candidates need not complete this task. 
 
+# APIs
+flight-manager/displayAll
+geopoints/list/airways
+geopoints/list/fixes
+geopoints/list/airports
+
+An API Key is required, else you can connect locally through the FlightPlanAPI project   
 
 # Cloning the project
-git clone 
+git clone https://github.com/kjoo/techchallenge
 
 # .Net Packages
 Serilog packages used for logging
@@ -24,10 +31,12 @@ EntityFramework packages for Db
 Json processing packages for Json messages
 1. dotnet add package Newtonsoft.Json
 
+Leaflet map with OpenStreetMap tiles is used for the flight plan routing, working with markers, polylines and popups, and dealing with events.
+- https://leafletjs.com/reference.html
 
 # Containerizing release with Docker   
 For this release, Docker must be installed and running for this sample to work. Additionally, only Linux-x64 containers are supported.
- 
+
 #add a reference to a (temporary) package that creates the container
 1. dotnet add package Microsoft.NET.Build.Containers
 
