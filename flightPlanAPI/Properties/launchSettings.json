@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "http": {
+    "FlightPlanAPI": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

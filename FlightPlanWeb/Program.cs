@@ -39,7 +39,7 @@ namespace FlightplanWeb
             builder.Services.AddAutoMapper(typeof(MappingConfig));
 
             //
-            logger.Information($"Using Service API:{configuration.GetValue<string>("ServiceUrlsAPIUrl")}");
+            logger.Information($"Using Service API:{configuration.GetValue<string>("ServiceUrls:APIUrl")}");
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

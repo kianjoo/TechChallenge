@@ -20,10 +20,3 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "FlightPlanWeb.dll"]
-
-#FROM python:3.7-slim-stretch
-#RUN pip install flask
-#COPY . .
-#ENV FLASK_APP=flightplanweb:1.0.0
-#CMD ["flask", "run", "--host", "0.0.0.0"]
-
