@@ -68,8 +68,16 @@ namespace FlightPlanAPI.Models
         [JsonIgnore]
         public int id { get; set; }
         public string? destinationAerodrome { get; set; }
-        public List<string>? alternativeAerodrome { get; set; }
-        public string? airportSlotIdentification { get; set; }
+		[NotMapped]
+		public List<string>? alternativeAerodrome { get; set; }
+		[JsonIgnore]
+		public string? alternativeAerodromeJson
+		{
+			get => alternativeAerodrome != null ? JsonConvert.SerializeObject(alternativeAerodrome) : null;
+			set => alternativeAerodrome = !string.IsNullOrEmpty(value) ? JsonConvert.DeserializeObject<List<string>>(value) : null;
+		}
+
+		public string? airportSlotIdentification { get; set; }
         public string? arrivalRunwayDirection { get; set; }
         public string? arrivalAerodrome { get; set; }
         public DateTime? actualTimeOfArrival { get; set; }
@@ -93,8 +101,15 @@ namespace FlightPlanAPI.Models
         public Communication? communication { get; set; }
         public Navigation? navigation { get; set; }
         public Survival? survival { get; set; }
-        public List<string>? surveillanceCapabilitiesCodes { get; set; }
-        public string? aircraftRegistration { get; set; }
+		[NotMapped]
+		public List<string>? surveillanceCapabilitiesCodes { get; set; }
+		[JsonIgnore]
+		public string? surveillanceCapabilitiesCodesJson
+		{
+			get => surveillanceCapabilitiesCodes != null ? JsonConvert.SerializeObject(surveillanceCapabilitiesCodes) : null;
+			set => surveillanceCapabilitiesCodes = !string.IsNullOrEmpty(value) ? JsonConvert.DeserializeObject<List<string>>(value) : null;
+		}
+		public string? aircraftRegistration { get; set; }
         public string? aircraftAddress { get; set; }
         public int numberOfAircraft { get; set; }
         public string? aircraftType { get; set; }
@@ -107,9 +122,24 @@ namespace FlightPlanAPI.Models
     {
         [JsonIgnore]
         public int id { get; set; }
-        public List<string>? communicationCapabilityCode { get; set; }
-        public List<string>? dataLinkCapabilityCode { get; set; }
-        public string? selectiveCallingCode { get; set; }
+		[NotMapped]
+		public List<string>? communicationCapabilityCode { get; set; }
+		[JsonIgnore]
+		public string? communicationCapabilityCodeJson
+		{
+			get => communicationCapabilityCode != null ? JsonConvert.SerializeObject(communicationCapabilityCode) : null;
+			set => communicationCapabilityCode = !string.IsNullOrEmpty(value) ? JsonConvert.DeserializeObject<List<string>>(value) : null;
+		}
+
+		[NotMapped]
+		public List<string>? dataLinkCapabilityCode { get; set; }
+		[JsonIgnore]
+		public string? dataLinkCapabilityCodeJson
+		{
+			get => dataLinkCapabilityCode != null ? JsonConvert.SerializeObject(dataLinkCapabilityCode) : null;
+			set => dataLinkCapabilityCode = !string.IsNullOrEmpty(value) ? JsonConvert.DeserializeObject<List<string>>(value) : null;
+		}
+		public string? selectiveCallingCode { get; set; }
         public string? otherCommunicationCapabilities { get; set; }
         public string? otherDataLinkCapabilities { get; set; }
     }
@@ -118,9 +148,24 @@ namespace FlightPlanAPI.Models
     {
         [JsonIgnore]
         public int id { get; set; }
-        public List<string>? navigationCapabilitiesCode { get; set; }
-        public List<string>? performanceBasedCode { get; set; }
-        public string? otherNavigationCapabilities { get; set; }
+		[NotMapped]
+		public List<string>? navigationCapabilitiesCode { get; set; }
+		[JsonIgnore]
+		public string? navigationCapabilitiesCodeJson
+		{
+			get => navigationCapabilitiesCode != null ? JsonConvert.SerializeObject(navigationCapabilitiesCode) : null;
+			set => navigationCapabilitiesCode = !string.IsNullOrEmpty(value) ? JsonConvert.DeserializeObject<List<string>>(value) : null;
+		}
+
+		[NotMapped]
+		public List<string>? performanceBasedCode { get; set; }
+		[JsonIgnore]
+		public string? performanceBasedCodeJson
+		{
+			get => performanceBasedCode != null ? JsonConvert.SerializeObject(performanceBasedCode) : null;
+			set => performanceBasedCode = !string.IsNullOrEmpty(value) ? JsonConvert.DeserializeObject<List<string>>(value) : null;
+		}
+		public string? otherNavigationCapabilities { get; set; }
     }
 
     public class Survival

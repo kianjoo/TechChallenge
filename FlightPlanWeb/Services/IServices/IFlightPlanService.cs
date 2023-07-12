@@ -1,13 +1,26 @@
-﻿using FlightPlanWeb.Models.DTO;
+﻿using FlightplanWeb.Models;
 
-namespace FlightPlanWeb.Services.IServices
+namespace FlightplanWeb.Services.IServices
 {
-    public interface IFlightPlanService
+    public interface IFlightplanService
     {
-		public Task<T>? GenerateFlightPlanAsync<T>();
-		public Task<T>? GetAllAsync<T>();
-		public Task<T>? GetAsync<T>();
-		public Task<SortedDictionary<string,List<FlightPlanDTO>>> GetRouting(string departure, string arrival);
-		public void SetFlightPlan(List<FlightPlanDTO> flightPlanDTOList);
+		public Task<T?> GetFlightManagerDisplayAllAsync<T>();
+		public Task<T?> GetGeoPointListAirwaysAsync<T>();
+		public Task<T?> GetGeoPointListFixesAsync<T>();
+		public Task<T?> GetGeoPointListAirportsAsync<T>();
+
+		//FlightPlans
+		public Task<List<FlightPlan>> GetFlightplanAsync();
+		public Task<List<FlightPlan>> SetFlightplanAsync();
+
+		//Fixes
+		public Task<List<Fix>> GetFixAsync();
+		public Task<List<Fix>> SetFixAsync();
+
+		//Airport
+		public Task<List<Fix>> GetAirportAsync();
+		public Task<List<Fix>> SetAirportAsync();
+
+		public Task<SortedDictionary<string,List<FlightPlan>>> GetRouting(string departure, string arrival);
 	}
 }

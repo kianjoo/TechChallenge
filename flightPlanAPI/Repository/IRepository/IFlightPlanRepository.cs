@@ -4,8 +4,9 @@ namespace FlightPlanAPI.IRepository
 {
     public interface IFlightPlanRepository
     {
-        FlightPlan GetSingleFlightPlan();
-		FlightPlan GetFlightPlan(string id);
+        FlightPlan GetRandomFlightPlan();
+		string GetMockData(string filename);
+
 		List<FlightPlan> GenerateFlightPlan();
 		List<FlightPlan> GetFlightPlanList();
 		bool Save();

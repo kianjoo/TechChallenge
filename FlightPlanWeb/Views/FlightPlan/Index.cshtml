@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+	.icon {
+		width: 120px; /* Adjust the width as needed */
+		height: 120px; /* Adjust the height as needed */
+		vertical-align: middle;
+	}
+
+	.icon-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+
+	.value-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.text {
+		font-size: 20px; /* Adjust the font size for the text as needed */
+	}
+
+	.value {
+		font-size: 32px; /* Adjust the font size for the value as needed */
+	}
+</style>
+
+<div class="container p-4 border">
+	<div class="row pb-4">
+		<div class="col">
+			<h1 class="display-3">The Flight Plan Project</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<p class="lead">
+				<div class="icon-container">
+					<img src="/css/images/flight-plan-icon.png" alt="Flight Plan Icon" class="icon">
+					<span class="mt-2 text">Flight Plans:</span>
+				</div>
+				<div class="value-container">
+					<span class="badge bg-primary value">@ViewBag.flightPlanListCount</span>
+				</div>
+			</p>
+		</div>
+		<div class="col">
+			<p class="lead">
+				<div class="icon-container">
+					<img src="/css/images/flight-fix-icon.png" alt="Fix Icon" class="icon">
+					<span class="mt-2 text">Fixes:</span>
+				</div>
+				<div class="value-container">
+					<span class="badge bg-primary value">@ViewBag.fixListCount</span>
+				</div>
+			</p>
+		</div>
+		<div class="col">
+			<p class="lead">
+				<div class="icon-container">
+					<img src="/css/images/airport-icon.png" alt="Airport Icon" class="icon">
+					<span class="mt-2 text">Airports:</span>
+				</div>
+				<div class="value-container">
+					<span class="badge bg-primary value">@ViewBag.airportListCount</span>
+				</div>
+			</p>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,46 @@
+﻿@using FlightplanWeb.Models;
+@model List<string>
+
+<style>
+	.icon {
+		width: 60px;
+		height: 60px;
+		margin-right: 2px;
+	}
+</style>
+
+
+<br />
+<div class="container p-4 border">
+	<div class="row pb-2">
+		<div class="col-auto">
+			<div class="icon-container">
+				<img src="/css/images/flight-airway-icon.png" alt="Airway Icon" class="icon">
+			</div>
+		</div>
+		<div class="col-4 p-2">
+			<h1 class="text-primary header-text">Airways</h1>
+		</div>
+		<div class="col text-end pt-1">
+			<form asp-action="AirwayList">
+				<input type="submit" value="Retrieve" class="btn btn-success form-control" />
+			</form>
+		</div>
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Airway</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in @Model)
+			{
+				<tr>
+					<td>@item</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

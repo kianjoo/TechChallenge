@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace FlightPlanWeb.Migrations
+namespace FlightplanWeb.Migrations
 {
     /// <inheritdoc />
     public partial class initial : Migration

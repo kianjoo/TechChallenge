@@ -1,8 +1,8 @@
-﻿using FlightPlanWeb.Models;
+﻿using FlightplanWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace FlightPlanWeb.Controllers
+namespace FlightplanWeb.Controllers
 {
     public class HomeController : Controller
     {

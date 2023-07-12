@@ -38,13 +38,14 @@ namespace FlightPlanAPI
 
             //db
             var connectionString = builder.Configuration.GetConnectionString("FlightDb");
-            builder.Services.AddDbContext<FlightPlanDbContext>(x => x.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString));
 
-            //services
-            builder.Services.AddScoped<IFlightPlanRepository, FlightPlanRepository>();
+			//services
+			builder.Services.AddScoped<IGeoPointsRepository, GeoPointsRepository>();
+			builder.Services.AddScoped<IFlightPlanRepository, FlightPlanRepository>();
 
 
-            builder.Services.AddAutoMapper(typeof(MappingConfig));
+			builder.Services.AddAutoMapper(typeof(MappingConfig));
 
             builder.Services.AddControllers().AddNewtonsoftJson(options =>
 				{

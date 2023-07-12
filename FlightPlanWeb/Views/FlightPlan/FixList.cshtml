@@ -1,0 +1,77 @@
+﻿@using FlightplanWeb.Models;
+<br />
+<style>
+	.icon {
+		width: 60px;
+		height: 60px;
+		margin-right: 2px;
+	}
+</style>
+<div class="container p-4 border">
+	<div class="row p-2">
+		<div class="col-auto">
+			<div class="icon-container">
+				<img src="/css/images/flight-fix-icon.png" alt="Fix Icon" class="icon">
+			</div>
+		</div>
+		<div class="col-4 p-2">
+			<h1 class="text-primary header-text">Fixes</h1>
+		</div>
+		<div class="col p-2">
+			<form asp-action="RetrieveFix">
+				<div class="row align-items-center">
+					<div class="col">
+						<input type="submit" value="Retrieve" class="btn btn-success form-control" />
+						<input type="hidden" id="filterFixHidden" name="filterFix" value="@ViewBag.filterFix" class="form-control" />
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col text-end">
+			<form asp-action="FixList">
+				<div class="container border p-2">
+					<div class="row">
+						<div class="col-10 col-sm-6 pb-2">
+							<input name="filterFix" value="@ViewBag.filterFix" class="form-control" />
+						</div>
+
+						<div class="col-2 col-sm-6">
+							<input type="submit" value="Filter Fix" class="btn btn-success form-control" />
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<p>Number of Waypoints: @ViewBag.fixesCount</p>
+	@if (ViewBag.filteredFixesCount != null)
+	{
+		<p>Filtered waypoints:  @ViewBag.filteredFixesCount</p>
+	}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Airway</th>
+				<th>Latitude</th>
+				<th>Longitude</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in ViewBag.fixesToDisplay)
+			{
+				<tr>
+					<td>@item.airway</td>
+					<td>@item.lat</td>
+					<td>@item.lon</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+@*<div>
+	<button disabled="@IsFirstPage" @onclick="GoToFirstPage">First</button>
+	<button disabled="@IsFirstPage" @onclick="GoToPreviousPage">Previous</button>
+	<span>Page @CurrentPage of @TotalPages</span>
+	<button disabled="@IsLastPage" @onclick="GoToNextPage">Next</button>
+	<button disabled="@IsLastPage" @onclick="GoToLastPage">Last</button>
+</div>*@

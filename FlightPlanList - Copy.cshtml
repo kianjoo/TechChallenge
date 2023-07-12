@@ -1,0 +1,41 @@
+﻿@using FlightPlanWeb.Models;
+@model IEnumerable<FlightPlan>
+<br />
+<div class="container p-4 border">
+	<div class="row pb-2">
+		<div class="col">
+			<h1 class="text-primary">List</h1>
+		</div>
+		<div class="col text-end pt-1">
+			<form asp-action="RetrieveFlightPlan">
+				<input type="submit" value="Retrieve" class="btn btn-success form-control" />
+			</form>
+		</div>
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Aircraft</th>
+				<th>Departure</th>
+				<th>Departure DateTime</th>
+				<th>Arrival</th>
+				<th>Arrival DateTime</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var item in Model)
+			{
+				<tr>
+					<td>@item.id</td>
+					<td>@item.aircraftIdentification</td>
+					<td>@item.departure.departureAerodrome</td>
+					<td>@item.departure.actualTimeOfDeparture</td>
+					<td>@item.arrival.arrivalAerodrome</td>
+					<td>@item.arrival.actualTimeOfArrival</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

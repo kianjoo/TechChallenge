@@ -1,0 +1,134 @@
+﻿@using FlightPlanWeb.Models;
+@*
+	@model IEnumerable<FlightPlan>
+*@
+<form asp-action="FlightPlanList">
+	<br />
+	<div class="container border p-3">
+		<h1 class="text-primary">Search</h1>
+		<hr />
+
+		<div class="row">
+			@*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+
+			<div class="col-2">
+				<label class="control-label pt-2" style="font-size:20px;">Departure</label>
+			</div>
+
+			<div class="col-10 pb-3">
+				<input name="departureAerodrome" value="@ViewBag.departure" class="form-control" />
+			</div>
+
+			<div class="col-2">
+				<label class="control-label pt-2" style="font-size:20px;">Arrival</label>
+			</div>
+
+			<div class="col-10 pb-3">
+				<input name="arrivalAerodrome" value="@ViewBag.arrival" class="form-control" />
+			</div>
+
+			<div class="col-5">
+				<input type="submit" value="Search" class="btn btn-success form-control" />
+			</div>
+		</div>
+	</div>
+</form>
+
+@{
+	@if (@ViewBag.routing.Count > 0)
+	{
+		<p>Result: @ViewBag.routing.Count</p>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Duration(hr)</th>
+					<th>Routes</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (KeyValuePair<string, List<FlightPlan>> pair in ViewBag.routing)
+				{
+					<tr>
+						<td>
+							@{
+								string[] parts = @pair.Key.Split(',');
+								<p>@parts[0]</p>
+							}
+						</td>
+						<td>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Aircraft</th>
+										<th>Departure</th>
+										<th>Departure Time</th>
+										<th>Arrival</th>
+										<th>Arrival Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (FlightPlan fp in @pair.Value)
+									{
+										<tr>
+											<td>@fp.id.PadLeft(5,'0')</td>
+											<td>@fp.aircraftIdentification</td>
+											<td>@fp.departure.departureAerodrome</td>
+											<td>@fp.departure.actualTimeOfDeparture.ToString("yyyyMMdd HH:mm:ss")</td>
+											<td>@fp.arrival.arrivalAerodrome</td>
+											<td>@fp.arrival.actualTimeOfArrival.ToString("yyyyMMdd HH:mm:ss")</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+
+	}
+}
+
+<br />
+<div class="container p-4 border">
+	<div class="row pb-2">
+		<div class="col">
+			<h1 class="text-primary">List of Flight Plans</h1>
+		</div>
+		<div class="col text-end pt-1">
+			<form asp-action="RetrieveFlightPlan">
+				<input type="submit" value="Retrieve FlightPlan" class="btn btn-success form-control" />
+			</form>
+		</div>
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+@*				<th>Id</th>
+*@				<th>Aircraft</th>
+				<th>Departure</th>
+				<th>Time of Departure (GMT)</th>
+				<th>Arrival</th>
+				<th>Time of Arrival (GMT)</th>
+				<th>Route</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in ViewBag.flightPlanDTOList)
+			{
+				<tr>
+@*					<td>@item.id</td>
+*@					<td>@item.aircraftIdentification</td>
+					<td>@item.departure.departureAerodrome</td>
+					<td>@item.departure.timeOfFlight</td>
+					<td>@item.arrival.destinationAerodrome</td>
+					<td>@item.arrival.timeOfArrival</td>
+					<td>@item.id<br/>@item?.filedRoute?.routeText</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

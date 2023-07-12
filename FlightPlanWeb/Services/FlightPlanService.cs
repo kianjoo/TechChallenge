@@ -1,182 +1,267 @@
-﻿using FlightPlanWeb.Models.DTO;
-using FlightPlanWeb.Services.IServices;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Rewrite;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Configuration;
+﻿using Azure;
+using FlightplanWeb.Models;
+using FlightplanWeb.Services.IServices;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 //using System.Text.Json;
-using System.Web.Http.Results;
-using OkResult = System.Web.Http.Results.OkResult;
 
-namespace FlightPlanWeb.Services
+
+namespace FlightplanWeb.Services
 {
-    public class FlightPlanService : IFlightPlanService
+	public class FlightplanService : IFlightplanService
     {
         public IHttpClientFactory httpClient { get; set; }
-		public readonly ILogger<FlightPlanService> logger;
+		public readonly ILogger<FlightplanService> logger;
 		public readonly IConfiguration configuration;
-		static List<FlightPlanDTO> _flightPlanDTOList = new List<FlightPlanDTO>();
+		
+		static List<FlightPlan> _flightPlanList = new List<FlightPlan>();
+		static List<Fix> _fixList = new List<Fix>();
+		static List<Fix> _airportList = new List<Fix>();
 
-        public FlightPlanService(IHttpClientFactory httpClient, ILogger<FlightPlanService> logger, IConfiguration configuration)
+		public FlightplanService(IHttpClientFactory httpClient, ILogger<FlightplanService> logger, IConfiguration configuration)
         {
             this.httpClient = httpClient;
             this.logger = logger;
             this.configuration = configuration;
         }
 
-        public async Task<T>? GetAllAsync<T>()
+		public async Task<T?> GetFlightManagerDisplayAllAsync<T>()
         {
-            string serviceURL=configuration.GetValue<string>("ServiceUrls:FlightPlanAPI");
-			string apiKey = configuration.GetValue<string>("apiKey");
+			string apiURL = configuration.GetValue<string>("ServiceUrls:APIUrl") ?? string.Empty;
+			string serviceURL = configuration.GetValue<string>("ServiceUrls:FlightManagerDisplayAll") ?? string.Empty;
+			string apiKey = configuration.GetValue<string>("apiKey") ?? string.Empty;
 
-			HttpRequestMessage message = new HttpRequestMessage()
-            {
-                Headers =
-                    {
-                        { "Accept", "application/json" },
-                        { "apikey", apiKey },
-                    },
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(serviceURL+"/api/FlightPlan/displayall"),
-                //Content = new StringContent(JsonConvert.SerializeObject('apiContent'), Encoding.UTF8, "application/json")
+			var client = httpClient.CreateClient("FlightPlanAPI");
+			HttpRequestMessage reqMsg= new HttpRequestMessage()
+			{
+				Headers = {
+						{ "Accept", "application/json" },
+						{ "apikey", apiKey },
+					},
+				Method = HttpMethod.Get,
+				RequestUri = new Uri(apiURL + serviceURL),
+			};
 
-            };
-            var client = httpClient.CreateClient("FlightPlanAPI");
-            HttpResponseMessage apiResponse = await client.SendAsync(message);
-            var apiContent = await apiResponse.Content.ReadAsStringAsync();
+			try
+			{
+				HttpResponseMessage response = await client.SendAsync(reqMsg);
+				string content = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<T>(content);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex.ToString());
+			}
 
-            //string res=JsonConvert.SerializeObject(apiContent);
+			return default(T);
+		}
 
-            return JsonConvert.DeserializeObject<T>(apiContent);
-        }
+		public async Task<T?> GetGeoPointListAirwaysAsync<T>()
+		{
+			string apiURL = configuration.GetValue<string>("ServiceUrls:APIUrl") ?? string.Empty;
+			string serviceURL = configuration.GetValue<string>("ServiceUrls:GeoPointListAirways") ?? string.Empty;
+			string apiKey = configuration.GetValue<string>("apiKey") ?? string.Empty;
 
-        public async Task<T>? GetAsync<T>()
+			var client = httpClient.CreateClient("FlightPlanAPI");
+			HttpRequestMessage reqMsg = new HttpRequestMessage()
+			{
+				Headers = {
+						{ "Accept", "application/json" },
+						{ "apikey", apiKey },
+					},
+				Method = HttpMethod.Get,
+				RequestUri = new Uri(apiURL + serviceURL),
+			};
+
+			try
+			{
+				HttpResponseMessage response = await client.SendAsync(reqMsg);
+				string content = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<T>(content);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex.ToString());
+			}
+
+			return default(T);
+		}
+
+		public async Task<T?> GetGeoPointListFixesAsync<T>()
+		{
+			string apiURL = configuration.GetValue<string>("ServiceUrls:APIUrl") ?? string.Empty;
+			string serviceURL = configuration.GetValue<string>("ServiceUrls:GeoPointListFixes") ?? string.Empty;
+			string apiKey = configuration.GetValue<string>("apiKey") ?? string.Empty;
+
+		
+			var client = httpClient.CreateClient("FlightPlanAPI");
+			HttpRequestMessage reqMsg= new HttpRequestMessage()
+			{
+				Headers = {
+						{ "Accept", "application/json" },
+						{ "apikey", apiKey },
+					},
+				Method = HttpMethod.Get,
+				RequestUri = new Uri(apiURL + serviceURL),
+			};
+
+			try
+			{
+				HttpResponseMessage response = await client.SendAsync(reqMsg);
+				string content = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<T>(content);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex.ToString());
+			}
+
+			return default(T);
+		}
+
+
+		public async Task<T?> GetGeoPointListAirportsAsync<T>()
+		{
+			string apiURL = configuration.GetValue<string>("ServiceUrls:APIUrl") ?? string.Empty;
+			string serviceURL = configuration.GetValue<string>("ServiceUrls:GeoPointListAirports") ?? string.Empty;
+			string apiKey = configuration.GetValue<string>("apiKey") ?? string.Empty;
+
+			var client = httpClient.CreateClient("FlightPlanAPI");
+			HttpRequestMessage reqMsg=new HttpRequestMessage()
+			{
+				Headers = {
+						{ "Accept", "application/json" },
+						{ "apikey", apiKey },
+					},
+				Method = HttpMethod.Get,
+				RequestUri = new Uri(apiURL + serviceURL),
+			};
+
+			try
+			{
+				HttpResponseMessage response = await client.SendAsync(reqMsg);
+				string content = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<T>(content);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex.ToString());
+			}
+
+			return default(T);
+		}
+
+		//Waypoints
+		public async Task<List<Fix>> GetFixAsync()
+		{
+			return await Task.Run(() => _fixList);
+		}
+
+		public async Task<List<Fix>> SetFixAsync()
+		{
+			List<string> fixList = await GetGeoPointListFixesAsync<List<string>>() ?? new List<string>();
+
+			_fixList.Clear();
+			Regex regex = new Regex(@"^(?<airway>[A-Z0-9]+)\s+\((?<lat>[-+]?\d+\.\d+),\s*(?<lon>[-+]?\d+\.\d+)\)$");
+			foreach (string fixStr in fixList)
+			{
+				Match match = regex.Match(fixStr);
+				if (match.Success)
+				{
+					_fixList.Add(new Fix
+					{
+						airway = match.Groups["airway"].Value,
+						lat = double.Parse(match.Groups["lat"].Value),
+						lon = double.Parse(match.Groups["lon"].Value)
+					});
+				}
+			}
+			return _fixList;
+		}
+
+		//FlightPlans
+		public async Task<List<FlightPlan>> GetFlightplanAsync()
+		{
+			return await Task.Run(() => _flightPlanList);
+		}
+
+		public async Task<List<FlightPlan>> SetFlightplanAsync()
         {
-			string serviceURL = configuration.GetValue<string>("ServiceUrls:FlightPlanAPI");
-			string apiKey = configuration.GetValue<string>("apiKey");
+			_flightPlanList = await GetFlightManagerDisplayAllAsync<List<FlightPlan>>() ?? new List<FlightPlan>();
+			return _flightPlanList;
+		}
 
-			HttpRequestMessage message = new HttpRequestMessage()
-            {
-                Headers =
-                    {
-                        { "Accept", "application/json" },
-                        { "apikey", apiKey },
-                    },
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(serviceURL+"/api/FlightPlan/displayFlightPlan"),
-                //Content = new StringContent(JsonConvert.SerializeObject('apiContent'), Encoding.UTF8, "application/json")
+		public async Task<List<Fix>> GetAirportAsync()
+		{
+			return await Task.Run(() => _airportList);
+		}
 
-            };
-            var client = httpClient.CreateClient("FlightPlanAPI");
-            HttpResponseMessage apiResponse = await client.SendAsync(message);
-            string apiContent = await apiResponse.Content.ReadAsStringAsync();
+		public async Task<List<Fix>> SetAirportAsync()
+		{
+			List<string> fixList = await GetGeoPointListAirportsAsync<List<string>>() ?? new List<string>();
+			_airportList.Clear();
+			Regex regex = new Regex(@"^(?<airway>[A-Z0-9]+)\s+\((?<lat>[-+]?\d+\.\d+),\s*(?<lon>[-+]?\d+\.\d+)\)$");
+			foreach (string fixStr in fixList)
+			{
+				Match match = regex.Match(fixStr);
+				if (match.Success)
+				{
+					_airportList.Add(new Fix
+					{
+						airway = match.Groups["airway"].Value,
+						lat = double.Parse(match.Groups["lat"].Value),
+						lon = double.Parse(match.Groups["lon"].Value)
+					});
+				}
+			}
+			return _airportList;
+		}
 
-            //string res=JsonConvert.SerializeObject(apiContent);
-            //object jsonResponse = JsonConvert.DeserializeObject(apiContent);
-            //return JsonConvert.DeserializeObject<T>(jsonResponse.ToString());
-            return JsonConvert.DeserializeObject<T>(apiContent);
-        }
+		private bool getNextFlightPath(List<FlightPlan> route, string arrival)
+		{
+			FlightPlan cfp = route.Last();
 
-        public async Task<T>? GenerateFlightPlanAsync<T>()
-        {
-			string serviceURL = configuration.GetValue<string>("ServiceUrls:FlightPlanAPI");
-			string apiKey = configuration.GetValue<string>("apiKey");
-			HttpRequestMessage message = new HttpRequestMessage()
-            {
-                Headers =
-                    {
-                        { "Accept", "application/json" },
-                        { "apikey", apiKey },
-                    },
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(serviceURL+"/api/FlightPlan/retrieveFlightPlan"),
-                //Content = new StringContent(JsonConvert.SerializeObject('apiContent'), Encoding.UTF8, "application/json")
-
-            };
-            var client = httpClient.CreateClient("FlightPlanAPI");
-            HttpResponseMessage apiResponse = await client.SendAsync(message);
-            string apiContent = await apiResponse.Content.ReadAsStringAsync();
-
-            //string res=JsonConvert.SerializeObject(apiContent);
-            //object jsonResponse = JsonConvert.DeserializeObject(apiContent);
-            //return JsonConvert.DeserializeObject<T>(jsonResponse.ToString());
-            return JsonConvert.DeserializeObject<T>(apiContent);
-        }
-
-        public void SetFlightPlan(List<FlightPlanDTO> flightPlanDTOList)
-        {
-            _flightPlanDTOList = flightPlanDTOList;
-        }
-
-        private bool getNextFlightPath(List<FlightPlanDTO> route, string arrival)
-        {
-            FlightPlanDTO cfp = route.Last();
-
-			if (cfp.arrival.arrivalAerodrome.Trim().ToLower() == arrival.Trim().ToLower())
+			if (cfp?.arrival?.arrivalAerodrome?.Trim().ToLower() == arrival.Trim().ToLower())
 			{
 				return true;
 			}
 
-			foreach (FlightPlanDTO fp in _flightPlanDTOList)
-            {
-                if(fp.departure.departureAerodrome.Trim().ToLower() == cfp.arrival.arrivalAerodrome.Trim().ToLower() 
-                    && fp.departure.actualTimeOfDeparture>= cfp.arrival.actualTimeOfArrival)
-                {
-                    route.Add(fp);
-                    return getNextFlightPath(route , arrival);
-                }
+			foreach (FlightPlan fp in _flightPlanList)
+			{
+				if (fp?.departure?.departureAerodrome?.Trim().ToLower() == cfp?.arrival?.arrivalAerodrome?.Trim().ToLower()
+					&& fp?.departure?.actualTimeOfDeparture >= cfp?.arrival?.actualTimeOfArrival)
+				{
+					route.Add(fp);
+					return getNextFlightPath(route, arrival);
+				}
 
-            }
-            return false;
-        }
+			}
+			return false;
+		}
 
-        public async Task<SortedDictionary<string, List<FlightPlanDTO>>> GetRouting(string departure, string arrival)
-        {
-            SortedDictionary<string, List<FlightPlanDTO>> routeList = new SortedDictionary<string, List<FlightPlanDTO>>();
-            //List<List<FlightPlanDTO>> routeResult = new List<List<FlightPlanDTO>>();
+		public async Task<SortedDictionary<string, List<FlightPlan>>> GetRouting(string departure, string arrival)
+		{
+			SortedDictionary<string, List<FlightPlan>> routeList = new SortedDictionary<string, List<FlightPlan>>();
+			//List<List<FlightPlanDTO>> routeResult = new List<List<FlightPlanDTO>>();
 
-            foreach (FlightPlanDTO fp in _flightPlanDTOList)
-            {
-                string shortestRoute = "";
-                TimeSpan shortestTimespan = TimeSpan.Zero;
-                if (fp.departure.departureAerodrome.Trim().ToLower() == departure.Trim().ToLower())
-                {
-                    List<FlightPlanDTO> route = new List<FlightPlanDTO>
-                    {
-                        fp
-                    };
+			foreach (FlightPlan fp in _flightPlanList)
+			{
+				TimeSpan shortestTimespan = TimeSpan.Zero;
+				if (fp?.departure?.departureAerodrome?.Trim().ToLower() == departure.Trim().ToLower())
+				{
+					List<FlightPlan> route = new List<FlightPlan>
+					{
+						fp
+					};
 
-                    if (getNextFlightPath(route, arrival) == true)
-                    {
-                        TimeSpan taken = route.Last().arrival.actualTimeOfArrival - route.First().departure.actualTimeOfDeparture;
-                        routeList[taken.TotalHours.ToString("0000.00") +","+ fp.id] = route;
-
-                        //if (shortestRoute == "")
-                        //{
-                        //    shortestRoute = route.First().id;
-                        //    shortestTimespan = taken;
-                        //}
-                        //else
-                        //{
-                        //    if(taken<shortestTimespan)
-                        //    {
-                        //        shortestRoute = route.First().id;
-                        //        shortestTimespan = taken;
-                        //    }
-                        //}
-
-                        //routeResult.Add(route);
-
-                    }
-                }
-            }
-			return routeList;
+					if (route!=null && getNextFlightPath(route, arrival) == true)
+					{
+						TimeSpan? taken = route.Last().arrival?.actualTimeOfArrival - route.First().departure?.actualTimeOfDeparture;
+						routeList[taken?.TotalHours.ToString("0000.00") + "," + fp.id] = route;
+					}
+				}
+			}
+			return await Task.Run(()=>routeList);
 		}
 	}
 }

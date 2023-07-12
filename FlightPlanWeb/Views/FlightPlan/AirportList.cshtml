@@ -1,0 +1,78 @@
+﻿@using FlightplanWeb.Models;
+
+<style>
+	.icon {
+		width: 60px;
+		height: 60px;
+		margin-right: 2px;
+	}
+</style>
+
+<br />
+<div class="container p-4 border">
+	<div class="row p-2">
+		<div class="col-auto">
+			<div class="icon-container">
+				<img src="/css/images/airport-icon.png" alt="Fix Icon" class="icon">
+			</div>
+		</div>
+		<div class="col-4 p-2">
+			<h1 class="text-primary header-text">Airports</h1>
+		</div>
+		<div class="col p-2">
+			<form asp-action="AirportList">
+				<div class="row align-items-center">
+					<div class="col">
+						<input type="submit" value="Retrieve" class="btn btn-success form-control" />
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col text-end">
+			<form asp-action="AirportList">
+				<div class="container border p-2">
+					<div class="row">
+						<div class="col-10 col-sm-6 pb-2">
+							<input name="filterAirport" value="@ViewBag.filterAirport" class="form-control" />
+						</div>
+
+						<div class="col-2 col-sm-6">
+							<input type="submit" value="Filter Airport" class="btn btn-success form-control" />
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<p>Number of Airports: @ViewBag.airportsCount</p>
+	@if (ViewBag.filteredAirportsCount != null)
+	{
+		<p>Filtered Airport:  @ViewBag.filteredAirportsCount</p>
+	}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Airport</th>
+				<th>Latitude</th>
+				<th>Longitude</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in ViewBag.airportsToDisplay)
+			{
+				<tr>
+					<td>@item.airway</td>
+					<td>@item.lat</td>
+					<td>@item.lon</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+@*<div>
+	<button disabled="@IsFirstPage" @onclick="GoToFirstPage">First</button>
+	<button disabled="@IsFirstPage" @onclick="GoToPreviousPage">Previous</button>
+	<span>Page @CurrentPage of @TotalPages</span>
+	<button disabled="@IsLastPage" @onclick="GoToNextPage">Next</button>
+	<button disabled="@IsLastPage" @onclick="GoToLastPage">Last</button>
+</div>*@

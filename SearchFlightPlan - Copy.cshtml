@@ -1,0 +1,36 @@
+﻿
+@model FlightPlanWeb.Models.FlightPlan;
+
+<form asp-action="SearchFlightPlan">
+	<br/>
+	<div class="container border p-3">
+		<h1 class="text-primary">Search</h1>
+		<hr/>
+
+		<div class="row">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			
+			<div class="col-2">
+				<label asp-for="departure.departureAerodrome" class="control-label pt-2"style="font-size:20px;"></label>
+			</div>
+
+			<div class="col-10 pb-3">
+				<input asp-for="departure.departureAerodrome" class="form-control" />
+				<span asp-validation-for="departure.departureAerodrome" class="text-danger"></span>
+			</div>
+
+			<div class="col-2">
+				<label asp-for="arrival.arrivalAerodrome" class="control-label pt-2" style="font-size:20px;"></label>
+			</div>
+
+			<div class="col-10 pb-3">
+				<input asp-for="arrival.arrivalAerodrome" class="form-control" />
+				<span asp-validation-for="arrival.arrivalAerodrome" class="text-danger"></span>
+			</div>
+
+			<div class="col-5">
+				<input type="submit" value="Search" class="btn btn-success form-control" />
+			</div>
+		</div>
+	</div>
+</form>

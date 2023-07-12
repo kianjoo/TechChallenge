@@ -9,7 +9,7 @@ namespace FlightPlanAPI.Repository
 {
     public class FlightPlanRepository: IFlightPlanRepository
     {
-        private readonly FlightPlanDbContext _db;
+        private readonly AppDbContext _db;
         private readonly ILogger<FlightPlanRepository> _logger;
         static int runningId = 0;
         private Random _rnd = new Random();
@@ -18,14 +18,13 @@ namespace FlightPlanAPI.Repository
 		
         static List<FlightPlan> _flightPlanList = new List<FlightPlan>();
 
-		public FlightPlanRepository(FlightPlanDbContext db, ILogger<FlightPlanRepository> logger)
+		public FlightPlanRepository(AppDbContext db, ILogger<FlightPlanRepository> logger)
         {
             _logger = logger;
             _db = db;
 		}
 
-
-        public FlightPlan GetSingleFlightPlan()
+		public FlightPlan GetRandomFlightPlan()
         {
             int idx = _rnd.Next(_location.Count);
 
@@ -237,11 +236,22 @@ namespace FlightPlanAPI.Repository
             return flightPlan;
         }
 
-        public FlightPlan GetFlightPlan(string id = "")
+        public string GetMockData(string filename)
         {
-            FlightPlan flightPlan = GetSingleFlightPlan();
-            return flightPlan;
-            //return _db.FlightPlan.FirstOrDefault(x => x.id == id);
+            string mockData = String.Empty;
+            try
+            {
+                using (StreamReader reader = new StreamReader(filename))
+                {
+					mockData = reader.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return mockData;
         }
 
 		public List<FlightPlan> GenerateFlightPlan()
@@ -249,7 +259,7 @@ namespace FlightPlanAPI.Repository
 			_flightPlanList.Clear();
 			for (int i = 0; i < 2000; ++i)
 			{
-				_flightPlanList.Add(GetSingleFlightPlan());
+				_flightPlanList.Add(GetRandomFlightPlan());
 			};
 
             return _flightPlanList;

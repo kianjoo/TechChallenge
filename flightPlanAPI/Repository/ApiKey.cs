@@ -37,7 +37,7 @@ namespace FlightPlanAPI.Repository
         public bool IsValid(string apiKey)
         {
             // Implement logic for validating the API key.
-            return apiKey.Equals("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9");
+            return apiKey.Equals("8081578a-e375-4fb9-8885-d2359fe94b72");
         }
     }
 

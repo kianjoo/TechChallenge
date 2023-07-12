@@ -1,14 +1,15 @@
 
-using FlightPlanWeb.Data;
-using FlightPlanWeb.Services;
-using FlightPlanWeb.Services.IServices;
+using FlightplanWeb.Data;
+using FlightplanWeb.Services;
+using FlightplanWeb.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace FlightPlanWeb
+namespace FlightplanWeb
 {
     public class Program
     {
+		[STAThread]
         public static void Main(string[] args)
         {
             var configuration = new ConfigurationBuilder()
@@ -28,17 +29,17 @@ namespace FlightPlanWeb
             // Add services to the container.
             //Db
             var connectionString = builder.Configuration.GetConnectionString("FlightDb");
-            builder.Services.AddDbContext<FlightPlanDbContext>(x => x.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<FlightplanDbContext>(x => x.UseSqlServer(connectionString));
 
-			builder.Services.AddHttpClient<IFlightPlanService, FlightPlanService>();
-			builder.Services.AddScoped<IFlightPlanService, FlightPlanService>();
+			builder.Services.AddHttpClient<IFlightplanService, FlightplanService>();
+			builder.Services.AddScoped<IFlightplanService, FlightplanService>();
 
 			//view
 			builder.Services.AddControllersWithViews();
             builder.Services.AddAutoMapper(typeof(MappingConfig));
-            
-            
-            
+
+            //
+            logger.Information($"Using Service API:{configuration.GetValue<string>("ServiceUrlsAPIUrl")}");
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -59,7 +60,7 @@ namespace FlightPlanWeb
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Flightplan}/{action=Index}/{id?}");
 
             app.Run();
         }

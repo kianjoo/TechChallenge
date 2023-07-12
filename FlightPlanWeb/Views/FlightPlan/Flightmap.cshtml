@@ -1,0 +1,17 @@
+﻿@using FlightplanWeb.Models;
+
+
+<div class="container p-4 border">
+	<h3>Flight Map</h3>
+
+	<div id="mapContainer" style="height: 500px;"></div>
+
+	@section Scripts {
+		<script src="~/js/leaflet.js"></script>
+		<script src="~/js/flightmap.js"></script>
+		<script>
+			var plotWaypoints = @Html.Raw(Json.Serialize(ViewBag.PlotWaypoint));
+			initializeMap(plotWaypoints);
+		</script>
+	}
+</div>

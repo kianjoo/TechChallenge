@@ -1,11 +1,11 @@
-﻿using FlightPlanWeb.Models;
+﻿using FlightplanWeb.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace FlightPlanWeb.Data
+namespace FlightplanWeb.Data
 {
-    public class FlightPlanDbContext : DbContext
+    public class FlightplanDbContext : DbContext
     {
-        public FlightPlanDbContext(DbContextOptions options) : base(options)
+        public FlightplanDbContext(DbContextOptions options) : base(options)
         {
         }
 

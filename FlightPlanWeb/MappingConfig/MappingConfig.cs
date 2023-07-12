@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using FlightPlanWeb.Models;
-using FlightPlanWeb.Models.DTO;
+using FlightplanWeb.Models;
 
-namespace FlightPlanWeb
+namespace FlightplanWeb
 {
     public class MappingConfig:Profile
     {
@@ -30,27 +29,27 @@ namespace FlightPlanWeb
             //CreateMap<ApacTrajElements, ApacTrajElementsDTO>().ReverseMap();
             //CreateMap<TrajRouteElement, TrajRouteElementDTO>().ReverseMap();
 
-            CreateMap<FlightPlanDTO, FlightPlan>().ReverseMap();
-            CreateMap<DepartureDTO, Departure>().ReverseMap();
-            CreateMap<ApacDepartureDTO, ApacDeparture>().ReverseMap();
-            CreateMap<ArrivalDTO, Arrival>().ReverseMap();
-            CreateMap<ApacArrivalDTO, ApacArrival>().ReverseMap();
-            CreateMap<AircraftDTO, Aircraft>().ReverseMap();
-            CreateMap<CommunicationDTO, Communication>().ReverseMap();
-            CreateMap<NavigationDTO, Navigation>().ReverseMap();
-            CreateMap<SurvivalDTO, Survival>().ReverseMap();
-            CreateMap<DinghiesDTO, Dinghies>().ReverseMap();
-            CreateMap<ApacAircraftTrackDTO, ApacAircraftTrack>().ReverseMap();
-            CreateMap<FiledRouteDTO, FiledRoute>().ReverseMap();
-            CreateMap<FiledRouteElementDTO, FiledRouteElement>();
-            CreateMap<PositionDTO, Position>().ReverseMap();
-            CreateMap<EnRouteDTO, EnRoute>().ReverseMap();
-            CreateMap<BoundaryCrossingDTO, BoundaryCrossing>().ReverseMap();
-            CreateMap<CrossingPointDTO, CrossingPoint>().ReverseMap();
-            CreateMap<RoutePointDTO, RoutePoint>().ReverseMap();
-            CreateMap<SupplementaryDTO, Supplementary>().ReverseMap();
-            CreateMap<ApacTrajElementsDTO, ApacTrajElements>().ReverseMap();
-            CreateMap<TrajRouteElementDTO, TrajRouteElement>().ReverseMap();
+            CreateMap<FlightPlan, FlightPlan>().ReverseMap();
+            CreateMap<Departure, Departure>().ReverseMap();
+            CreateMap<ApacDeparture, ApacDeparture>().ReverseMap();
+            CreateMap<Arrival, Arrival>().ReverseMap();
+            CreateMap<ApacArrival, ApacArrival>().ReverseMap();
+            CreateMap<Aircraft, Aircraft>().ReverseMap();
+            CreateMap<Communication, Communication>().ReverseMap();
+            CreateMap<Navigation, Navigation>().ReverseMap();
+            CreateMap<Survival, Survival>().ReverseMap();
+            CreateMap<Dinghies, Dinghies>().ReverseMap();
+            CreateMap<ApacAircraftTrack, ApacAircraftTrack>().ReverseMap();
+            CreateMap<FiledRoute, FiledRoute>().ReverseMap();
+            CreateMap<FiledRouteElement, FiledRouteElement>();
+            CreateMap<Position, Position>().ReverseMap();
+            CreateMap<EnRoute, EnRoute>().ReverseMap();
+            CreateMap<BoundaryCrossing, BoundaryCrossing>().ReverseMap();
+            CreateMap<CrossingPoint, CrossingPoint>().ReverseMap();
+            CreateMap<RoutePoint, RoutePoint>().ReverseMap();
+            CreateMap<Supplementary, Supplementary>().ReverseMap();
+            CreateMap<ApacTrajElements, ApacTrajElements>().ReverseMap();
+            CreateMap<TrajRouteElement, TrajRouteElement>().ReverseMap();
         }
     }
 }

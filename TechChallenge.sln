@@ -5,7 +5,9 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightPlanAPI", "flightPlanAPI\FlightPlanAPI.csproj", "{99773B96-A779-4952-9B6B-E6FD2DABF31C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightPlanWeb", "FlightPlanWeb\FlightPlanWeb.csproj", "{6D48112C-91A3-43AE-B445-EAAE7576E4EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightPlanWeb", "FlightPlanWeb\FlightPlanWeb.csproj", "{6D48112C-91A3-43AE-B445-EAAE7576E4EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetResponseMessage", "GetResponseMessage\GetResponseMessage.csproj", "{9523FBB0-A502-48FC-9C01-60AA32DC7DE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{6D48112C-91A3-43AE-B445-EAAE7576E4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D48112C-91A3-43AE-B445-EAAE7576E4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D48112C-91A3-43AE-B445-EAAE7576E4EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9523FBB0-A502-48FC-9C01-60AA32DC7DE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9523FBB0-A502-48FC-9C01-60AA32DC7DE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9523FBB0-A502-48FC-9C01-60AA32DC7DE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9523FBB0-A502-48FC-9C01-60AA32DC7DE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
