@@ -13,7 +13,7 @@ geopoints/list/airports
 An API Key is required, else you can connect locally through the FlightPlanAPI project   
 
 # Cloning the project
-git clone https://github.com/kjoo/techchallenge
+git clone https://github.com/kianjoo/techchallenge
 
 # .Net Packages
 Serilog packages used for logging
